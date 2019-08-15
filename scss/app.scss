@@ -1,0 +1,139 @@
+body, html {
+  margin: 0;
+  height: 100%;
+}
+
+.highlighted-block {
+  padding: 10px;
+  background: gold;
+  border: 1px #788794 solid;
+}
+
+@mixin flexBox($property) {
+  display: flex;
+  flex-direction: $property;
+}
+
+.container {
+  display: grid;
+  grid-template-areas: "header" "content" "advert" "footer";
+  grid-gap: 0;
+  height: 100%;
+  /*grid-template-rows: 1fr;*/
+  grid-template-columns: 1fr;
+
+  .header,
+  .nav,
+  .content,
+  .advertisement,
+  .footer {
+    @extend .highlighted-block;
+  }
+  .header {
+    grid-area: header;
+    @include flexBox(row);
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+
+    &__toggle-button {
+      border: 1px white solid;
+      background-color: inherit;
+      width: 25px;
+      .fa-times {
+        display: none;
+      }
+      &--opened {
+        .fa-times {
+          display: inline;
+        }
+        .fa-bars {
+          display: none;
+        }
+      }
+    }
+
+    &__main-menu {
+      width: 100%;
+      background-color: #788794;
+      position: absolute;
+      right: 0;
+      top: 100%;
+      display: none;
+
+      &--active {
+        display: block;
+      }
+
+    }
+  }
+  .nav {
+    /*grid-area: nav;*/
+    display: none;
+  }
+  .content {
+    grid-area: content;
+  }
+  .advertisement {
+    grid-area: advert;
+  }
+
+  .footer {
+    grid-area: footer;
+  }
+}
+
+@media screen and (min-width: 720px) {
+  .container {
+    grid-template-areas: "header header" "nav content" "advert advert" "footer footer";
+    grid-template-columns: 1fr 2fr;
+    .nav {
+      display: block;
+    }
+
+  }
+
+}
+
+@media screen and (min-width: 980px) {
+  .container {
+    grid-template-areas: "header header header" "nav content advert" "footer footer footer";
+    grid-template-columns: 1fr 2fr 1fr;
+    .nav {
+      display: block;
+    }
+    .header {
+      flex-direction: column;
+      padding: 0;
+      margin: 0;
+
+      &__toggle {
+        width: 100%;
+      }
+
+      &__toggle-button {
+        display: none;
+      }
+
+      &__main-menu{
+        display: block;
+        position: static;
+        background-color: silver;
+        height: 45px;
+      }
+      &__menu-list{
+        display: flex;
+        justify-content: center;
+        align-content: flex-end;
+        list-style: none;
+
+
+      }
+      &__list-item{
+        padding-top: 12px;
+        margin-right:10px ;
+      }
+    }
+  }
+}
+
